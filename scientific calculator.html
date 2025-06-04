@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <table border="1">
+        <tr>
+            <td colspan="4">
+                <input type="text" id="inputBox" value="0"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="digitButton" onclick="digitBtnPressed(7)">7</td>
+            <td class="digitButton" onclick="digitBtnPressed(8)">8</td>
+            <td class="digitButton" onclick="digitBtnPressed(9)">9</td>
+            <td class="operatorButton" onclick="operaterBtnPressed('x')">x</td>
+        </tr>
+        <tr>
+            <td class="digitButton" onclick="digitBtnPressed(4)">4</td>
+            <td class="digitButton" onclick="digitBtnPressed(5)">5</td>
+            <td class="digitButton" onclick="digitBtnPressed(6)">6</td>
+            <td class="operatorButton" onclick="operaterBtnPressed('-')">-</td>
+        </tr>
+        <tr>
+            <td class="digitButton" onclick="digitBtnPressed(1)">1</td>
+            <td class="digitButton" onclick="digitBtnPressed(2)">2</td>
+            <td class="digitButton" onclick="digitBtnPressed(3)">3</td>
+            <td class="operatorButton" onclick="operaterBtnPressed('+')">+</td>
+        </tr>
+        <tr>
+            <td class="functionButton" onclick="addDecimal()">.</td>
+            <td class="functionButton" onclick="toggleSign()">+/-</td>
+            <td class="ACButton" onclick="btnACPressed()">AC</td>
+            <td class="operatorButton" onclick="operaterBtnPressed('/')">/</td>
+        </tr>
+        <tr>
+            <td class="functionButton" onclick="powerOfTwo()">^²</td>
+            <td class="functionButton" onclick="powerOfThree()">^³</td>
+            <td class="functionButton" onclick="squareRoot()">√</td>
+            <td class="functionButton" onclick="recallLast()">RC</td>
+        </tr>
+        <tr>
+            <td class="digitButton" colspan="4" onclick="digitBtnPressed(0)">0</td>
+        </tr>
+        <tr>
+            <td class="operatorButton" colspan="4" onclick="equalsBtnPressed()">=</td>
+        </tr>
+    </table>
+
+    <script>
+        var newLine = true;
+        var value1;
+        var currentOperator;
+        var lastResult = 0;
+
+        function digitBtnPressed(button) {
+            if (newLine) {
+                document.getElementById("inputBox").value = button;
+                newLine = false;
+            } else {
+                let currentValue = document.getElementById("inputBox").value;
+                document.getElementById("inputBox").value = currentValue + button;
+            }
+        }
+
+        function btnACPressed() {
+            document.getElementById("inputBox").value = 0;
+            newLine = true;
+        }
+
+        function operaterBtnPressed(operator) {
+            currentOperator = operator;
+            value1 = parseFloat(document.getElementById("inputBox").value);
+            newLine = true;
+        }
+
+        function equalsBtnPressed() {
+            let value2 = parseFloat(document.getElementById("inputBox").value);
+            let finalTotal;
+
+            switch (currentOperator) {
+                case "+": finalTotal = value1 + value2; break;
+                case "-": finalTotal = value1 - value2; break;
+                case "x": finalTotal = value1 * value2; break;
+                case "/": finalTotal = value1 / value2; break;
+            }
+
+            document.getElementById("inputBox").value = finalTotal;
+            lastResult = finalTotal;
+            newLine = true;
+        }
+
+        function powerOfTwo() {
+             value = parseFloat(document.getElementById("inputBox").value);
+             result = value ** 2;
+            document.getElementById("inputBox").value = result;
+            lastResult = result;
+            newLine = true;
+        }
+
+        function powerOfThree() {
+             value = parseFloat(document.getElementById("inputBox").value);
+             result = value ** 3;
+            document.getElementById("inputBox").value = result;
+            lastResult = result;
+            newLine = true;
+        }
+
+        function squareRoot() {
+             value = parseFloat(document.getElementById("inputBox").value);
+             result = Math.sqrt(value);
+            document.getElementById("inputBox").value = result;
+            lastResult = result;
+            newLine = true;
+        }
+
+        function recallLast() {
+            document.getElementById("inputBox").value = lastResult;
+            newLine = false;
+        }
+
+        function addDecimal() {
+             input = document.getElementById("inputBox").value;
+            if (newLine) {
+                document.getElementById("inputBox").value = "0.";
+                newLine = false;
+            } else(input.includes("."))
+                document.getElementById("inputBox").value += ".";
+            }
+        
+
+        function toggleSign() {
+             value = parseFloat(document.getElementById("inputBox").value);
+            document.getElementById("inputBox").value = -value;
+        }
+    </script>
+</body>
+</html>
